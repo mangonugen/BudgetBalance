@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @*<title>@ViewBag.Title - My ASP.NET Application</title>*@
+    <title>Transaction Balance Transaction</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body ng-controller="indexController" ng-init="initializeController()" >
+    @Html.Partial("_MenuPartial")
+    <a id="hamburger" class="mm-slideout" href="#menu"><span></span></a>    
+    <div class="container body-content">
+        <div ng-view>
+            @RenderBody()
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Transaction Application</p>
+        </footer>
+    </div>
+
+    @*@Html.Partial("_MenuPartial")*@
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    @Scripts.Render("~/bundles/require")
+    @RenderSection("scripts", required: false)
+    @Html.Partial("_LoadRequire")
+</body>
+</html>

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <script src="Scripts/require.js"></script>
+
+</head>
+
+<body ng-controller="indexController" ng-init="initializeController()" ng-cloak>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-collapse collapse" id="MainMenu" ng-show="displayContent" style="visibility:hidden">
+                <ul class="nav navbar-nav" ng-repeat="menuItem in MenuItems | filter:{Module: 'Main'}">
+                    <li><a href="{{menuItem.Route}}">{{menuItem.Description}}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin: 75px 50px 50px 50px" ng-view></div>
+
+    <script language="JavaScript">
+
+        requirejs.config({
+            baseUrl: "/Scripts",
+            // alias libraries paths
+            paths: {
+                'appConfig': "appConfig",
+                'angular': 'angular',
+                'angularRoute': 'angular-route',
+                'angularAMD': 'angularAMD',
+                'angular-sanitize': 'angular-sanitize',
+                'ui-bootstrap': 'angular-ui/ui-bootstrap-tpls',
+                "jquery": "jquery-1.11.3.min",
+                'modernizr': 'modernizr-2.6.2',
+                "jquery.bootstrap": 'bootstrap.min',
+                "jquery.menu": "jquery.mmenu.min.all"
+            },
+            // Add angular modules that does not support AMD out of the box, put it in a shim
+            shim: {
+                "jquery.bootstrap": {
+                    deps: ["jquery"]
+                },
+                'jquery.menu': ["jquery"],
+                'angularAMD': ['angular'],
+                'angularRoute': ['angular'],
+                'angular-sanitize': ['angular'],
+                'ui-bootstrap': ['angular']
+            },
+            // kick start application
+            deps: ['appConfig']
+        });
+    </script>
+</body>
+
+</html>

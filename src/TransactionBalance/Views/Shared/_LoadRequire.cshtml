@@ -1,0 +1,59 @@
+﻿<script type="text/javascript">
+    requirejs.config({
+        baseUrl: "/Scripts",
+        // alias libraries bundle paths
+        bundles: {
+            '@Scripts.Url("~/bundles/jquery").ToString()': [
+                    'jquery'],
+            '@Scripts.Url("~/bundles/jqueryAddon").ToString()': [
+                    'jqueryAddon'],
+            '@Scripts.Url("~/bundles/spin").ToString()': [
+                    'spin'],
+            '@Scripts.Url("~/bundles/bootstrap").ToString()': [
+                    'jquery.bootstrap'],
+            '@Scripts.Url("~/bundles/angular").ToString()': [
+                    'angular'
+            ],
+            '@Scripts.Url("~/bundles/angularAMD").ToString()': [
+                    'angularAMD'
+            ],
+            '@Scripts.Url("~/bundles/angularRoute").ToString()': [
+                    'angularRoute'
+            ],
+            '@Scripts.Url("~/bundles/menu").ToString()': [
+                    'jquery.menu'],
+            '@Scripts.Url("~/bundles/respond").ToString()': [
+                    'respond'],
+            @*'@Scripts.Url("~/bundles/ajaxService").ToString()': [
+                    'ajaxService'],*@
+            '@Scripts.Url("~/bundles/accountsService").ToString()': [
+                    'accountsService'],
+            '@Scripts.Url("~/bundles/mainService").ToString()': [
+                    'mainService'],
+            @*'@Scripts.Url("~/bundles/appConfig").ToString()': [
+                    'appConfig'],*@
+            '@Scripts.Url("~/bundles/modernizr").ToString()': [
+                    'modernizr']
+        },
+        // alias libraries paths
+        paths: {
+            'appConfig': "appConfig",
+            'ui-bootstrap': 'angular-ui/ui-bootstrap-tpls',
+            'angularAMD': 'angularAMD',
+            //'mainService': 'services/mainService',
+            'ajaxService': 'services/ajaxService',
+        },
+        // Add angular modules that does not support AMD out of the box, put it in a shim
+        shim: {
+            "jquery.bootstrap": {
+                deps: ["jquery"]
+            },
+            'jquery.menu': ["jquery"],
+            'angularAMD': ['angular'],
+            'jqueryAddon': ['jquery', 'spin'],
+            'ui-bootstrap': ['angular']
+        },
+        // kick start application
+        deps: ['appConfig']
+    });
+</script>
