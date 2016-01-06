@@ -18,11 +18,9 @@ namespace TransactionBalance.Controllers
             return PartialView();
         }
 
-        public ActionResult About()
+        public ActionResult MenuItems()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return PartialView();
+            return PartialView("_MenuPartial");
         }
 
         public ActionResult Contact()

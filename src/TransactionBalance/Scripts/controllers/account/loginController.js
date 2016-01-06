@@ -1,12 +1,20 @@
 ﻿"use strict";
 
-define(['appConfig', 'accountsService', 'ajaxService'], function (app) {
+define(['appConfig', 'accountsService'], function (app) {
 
-    app.register.controller('loginController', ['$scope', '$rootScope', '$location', 'accountsService', 'ajaxService',
-        function ($scope, $rootScope, $location, accountsService, ajaxService) {
-        //$rootScope.closeAlert = alertsService.closeAlert;
+    app.register.controller('loginController', ['$scope', '$rootScope', '$location', 'accountsService',
+        function ($scope, $rootScope, $location, accountsService) {
 
         $scope.initializeController = function () {
+            if ($rootScope.isAuthenicated === undefined) {
+                accountsService.isUserAuthenicated(function (response) {
+                    if (response.IsAuthenicated)
+                        $location.path('/');
+                    $rootScope.isAuthenicated = response.IsAuthenicated;
+                }, $scope.registerUserError);
+            } else if ($rootScope.isAuthenicated) {
+                $location.path('/');
+            }
         };
 
         $scope.login = function () {
@@ -24,12 +32,14 @@ define(['appConfig', 'accountsService', 'ajaxService'], function (app) {
 
             //var result = ajaxService.AjaxRequest(config);
 
-            accountsService.login(ajaxService.SerializeObject($('#formLogin')), $scope.loginUserCompleted, $scope.loginUserError);
+            accountsService.login($('#formLogin'), $scope.loginUserCompleted, $scope.loginUserError);
             console.log('login');
         };
 
         $scope.loginUserCompleted = function (response) {
-            //window.location = "/#/";
+            if ($rootScope.isAuthenicated === undefined) {
+                $rootScope.isAuthenticated = response.IsAuthenicated;
+            }
             $location.path('/');
         };
 
@@ -42,8 +52,11 @@ define(['appConfig', 'accountsService', 'ajaxService'], function (app) {
             $errorUl.empty();
             for (var propertyName in response.ValidationErrors) {
                 $errorUl.append("<li>" + response.ValidationErrors[propertyName] + "</li>");
-                console.log(response.ValidationErrors[propertyName]);
             }
+
+            $.each(response.ReturnMessage, function (index, value) {
+                $errorUl.append("<li>" + value + "</li>");
+            });
         }
     }]);
 });

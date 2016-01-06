@@ -18,5 +18,8 @@
             ajaxService.AjaxPut(user, "/api/account/UpdateUser", successFunction, errorFunction);
         };
 
+        this.isUserAuthenicated = function (successFunction, errorFunction) {
+            ajaxService.AjaxGet("/api/account/IsUserAuthenicated", successFunction, errorFunction);
+        };
     }]);
 });

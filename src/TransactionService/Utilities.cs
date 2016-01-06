@@ -27,7 +27,6 @@ namespace TransactionService
                 totalPages = (int)(numberOfRecords / pageSize);
 
             return totalPages;
-
         }
 
         /// <summary>

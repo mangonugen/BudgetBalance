@@ -1,12 +1,19 @@
 ﻿"use strict";
 
-define(['appConfig', 'accountsService', 'ajaxService'], function (app) {
+define(['appConfig', 'accountsService'], function (app) {
 
-    app.register.controller('registerController', ['$scope', '$rootScope', 'accountsService', 'ajaxService', function ($scope, $rootScope, accountsService, ajaxService) {
-        //$rootScope.closeAlert = alertsService.closeAlert;
+    app.register.controller('registerController', ['$scope', '$rootScope', 'accountsService', function ($scope, $rootScope, accountsService) {
 
         $scope.initializeController = function () {
-            //$rootScope.applicationModule = "Products";
+            if ($rootScope.isAuthenicated === undefined) {
+                accountsService.isUserAuthenicated(function (response) {
+                    if (response.IsAuthenicated)
+                        window.location = "/#/";
+                    $rootScope.isAuthenicated = response.IsAuthenicated;
+                }, $scope.registerUserError);
+            } else if ($rootScope.isAuthenicated) {
+                window.location = "/#/";
+            }
         };
 
         $scope.register = function () {
@@ -24,11 +31,14 @@ define(['appConfig', 'accountsService', 'ajaxService'], function (app) {
 
             //var result = ajaxService.AjaxRequest(config)
 
-            accountsService.registerUser(ajaxService.SerializeObject($('#formRegister')), $scope.registerUserCompleted, $scope.registerUserError);
+            accountsService.registerUser($('#formRegister'), $scope.registerUserCompleted, $scope.registerUserError);
             console.log('register');
         };
 
         $scope.registerUserCompleted = function (response) {
+            if ($rootScope.isAuthenicated === undefined) {
+                $rootScope.isAuthenticated = response.IsAuthenicated;
+            }
             window.location = "/#/";
         };
 
@@ -39,10 +49,12 @@ define(['appConfig', 'accountsService', 'ajaxService'], function (app) {
             }
             var $errorUl = $(".validation-summary-errors ul");
             $errorUl.empty();
-            for (var propertyName in response.ValidationErrors) {
-                $errorUl.append("<li>" + response.ValidationErrors[propertyName] + "</li>");
-                console.log(response.ValidationErrors[propertyName]);
-            }
+            $.each(response.ValidationErrors, function (key, value) {
+                $errorUl.append("<li>" + value + "</li>");
+            });
+            $.each(response.ReturnMessage, function (index, value) {
+                $errorUl.append("<li>" + value + "</li>");
+            });
         }
     }]);
 });

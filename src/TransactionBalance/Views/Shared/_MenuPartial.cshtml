@@ -39,54 +39,53 @@
             }
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-            @if (User.Identity.IsAuthenticated)
-            {
-                <li data-toggle="collapse" data-target=".nav-collapse"><a href="/#/">Home</a></li>
-                <li><a href="#/home/about">Courses</a></li>
-                <li><a href="#/Account/Register/">Register</a></li>
-                <li class="dropdown">
-                    <a tabindex="0" data-toggle="dropdown">Dropdown 2<span class="caret"></span></a>
+            <ul class="nav navbar-nav navbar-left">
+                @if (User.Identity.IsAuthenticated)
+                {
 
-                    <!-- role="menu": fix moved by arrows (Bootstrap dropdown) -->
-                    <ul class="dropdown-menu" role="menu">
-                        <li class="dropdown-submenu">
-                            <a tabindex="0" data-toggle="dropdown">Action</a>
+                    <li class="dropdown">
+                        <a tabindex="0" data-toggle="dropdown" data-submenu>
+                            Dropdown 3<span class="caret"></span>
+                        </a>
 
-                            <ul class="dropdown-menu">
-                                <li><a tabindex="0">Sub action</a></li>
-                                <li class="dropdown-submenu">
-                                    <a tabindex="0" data-toggle="dropdown">Another sub action</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-submenu">
+                                <a tabindex="0">Action</a>
 
-                                    <ul class="dropdown-menu">
-                                        <li><a tabindex="0">Sub action</a></li>
-                                        <li><a tabindex="0">Another sub action</a></li>
-                                        <li><a tabindex="0">Something else here</a></li>
-                                    </ul>
-                                </li>
-                                <li><a tabindex="0">Something else here</a></li>
-                            </ul>
-                        </li>
-                        <li><a tabindex="0">Another action</a></li>
-                        <li class="dropdown-submenu">
-                            <a tabindex="0" data-toggle="dropdown">Something else here</a>
+                                <ul class="dropdown-menu">
+                                    <li><a tabindex="0">Sub action</a></li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="0">Another sub action</a>
 
-                            <ul class="dropdown-menu">
-                                <li><a tabindex="0">Sub action</a></li>
-                                <li><a tabindex="0">Another sub action</a></li>
-                                <li><a tabindex="0">Something else here</a></li>
-                            </ul>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a tabindex="0">Separated link</a></li>
-                    </ul>
-                </li>
-            }
-            else
-            {
-                <li><a href="#/Account/Login/">Login</a></li>
-                <li><a href="#/Account/Register/">Register</a></li>
-            }
+                                        <ul class="dropdown-menu">
+                                            <li><a tabindex="0">Sub action</a></li>
+                                            <li><a tabindex="0">Another sub action</a></li>
+                                            <li><a tabindex="0">Something else here</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a tabindex="0">Something else here</a></li>
+                                </ul>
+                            </li>
+                            <li><a tabindex="0" href="#/account/login">Login</a></li>
+                            <li class="dropdown-submenu">
+                                <a tabindex="0">Something else here</a>
+
+                                <ul class="dropdown-menu">
+                                    <li><a tabindex="0">Sub action</a></li>
+                                    <li><a tabindex="0">Another sub action</a></li>
+                                    <li><a tabindex="0">Something else here</a></li>
+                                </ul>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a tabindex="0">Separated link</a></li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li><a href="#/Account/Login/">Login</a></li>
+                    <li><a href="#/Account/Register/">Register</a></li>
+                }
             </ul>
         </div>
         <!--/.navbar-collapse -->

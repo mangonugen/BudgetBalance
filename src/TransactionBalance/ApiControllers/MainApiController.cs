@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Security;
+
+using TransactionBalance.Controllers;
+using TransactionBalance.Infrastructure;
 using TransactionBalance.Models;
-using TransactionRepository;
-using TransactionRepository.Interfaces;
 
 namespace TransactionBalance.ApiControllers
 {
@@ -32,20 +29,8 @@ namespace TransactionBalance.ApiControllers
         [HttpGet]
         public HttpResponseMessage AuthenicateUser([FromUri] string route)
         {
-            TransactionInformationDTO transaction = new TransactionInformationDTO();
+            var transaction = new TransactionInformationDTO();
             transaction.IsAuthenicated = User.Identity.IsAuthenticated;
-            var response = Request.CreateResponse(HttpStatusCode.OK, transaction);
-            return response;
-
-        }
-
-        [Route("Logout")]
-        [HttpGet]
-        public HttpResponseMessage Logout()
-        {
-            TransactionInformationDTO transaction = new TransactionInformationDTO();
-            FormsAuthentication.SignOut();
-            transaction.IsAuthenicated = false;
             var response = Request.CreateResponse(HttpStatusCode.OK, transaction);
             return response;
 
@@ -57,7 +42,7 @@ namespace TransactionBalance.ApiControllers
         /// <returns></returns>
         [Route("InitializeApplication")]
         [HttpGet]
-        public async Task<IHttpActionResult> InitializeApplication()
+        public IHttpActionResult InitializeApplication()
         {
             //ApplicationApiModel applicationWebApiModel = new ApplicationApiModel();
             //TransactionInformationDTO transaction = new TransactionInformationDTO();
@@ -101,5 +86,25 @@ namespace TransactionBalance.ApiControllers
             return Ok(transaction);
         }
 
+        /// <summary>
+        /// The get menu items.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="IHttpActionResult"/>.
+        /// </returns>
+        [Route("MenuItems")]
+        [HttpGet]
+        public IHttpActionResult GetMenuItems()
+        {
+            var transaction = new TransactionInformationDTO();
+            if(User.Identity.IsAuthenticated)
+            {
+                transaction.IsAuthenicated = true;
+            }
+
+            transaction.ReturnMessage.Add(Utilities.ViewRenderer<HomeController>("_MenuPartial", null));
+
+            return Ok(transaction);
+        }
     }
 }

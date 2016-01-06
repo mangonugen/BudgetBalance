@@ -2,9 +2,6 @@
 define(['appConfig'], function (app) {
 
     app.register.service('ajaxService', ['$http', function ($http) {
-        
-        //$http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-        $http.defaults.withCredentials = true;
 
         this.AjaxStatus = {
                 ERROR: 0,
@@ -109,11 +106,11 @@ define(['appConfig'], function (app) {
                 $http.defaults.headers.common['X-XSRF-Token'] = $('input[name="__RequestVerificationToken"]').attr('value');
         }
 
-        this.AjaxPost = function (data, route, successFunction, errorFunction) {
+        this.AjaxPost = function ($form, route, successFunction, errorFunction) {
             $.iOSLoadingScreen('Loading');
             this.AddXsfToken();
             
-            $http.post(route, data).success(function (response, status, headers, config) {
+            $http.post(route, this.SerializeObject($form)).success(function (response, status, headers, config) {
                 $.rmiOSLoadingScreen();
                 successFunction(response, status);
             }).error(function (response) {
@@ -123,10 +120,11 @@ define(['appConfig'], function (app) {
             });
         }
 
-        this.AjaxPostWithNoAuthenication = function (data, route, successFunction, errorFunction) {
+        this.AjaxPostWithNoAuthenication = function ($form, route, successFunction, errorFunction) {
             $.iOSLoadingScreen('Loading');
             this.AddXsfToken();
-            $http.post(route, data).success(function (response, status, headers, config) {
+
+            $http.post(route, this.SerializeObject($form)).success(function (response, status, headers, config) {
                 $.rmiOSLoadingScreen();
                 successFunction(response, status);
             }).error(function (response) {
@@ -135,11 +133,11 @@ define(['appConfig'], function (app) {
             });
         }
 
-        this.AjaxPut = function (data, route, successFunction, errorFunction) {
+        this.AjaxPut = function ($form, route, successFunction, errorFunction) {
             $.iOSLoadingScreen('Loading');
-            this.AddXsfToken();
-
-            $http({ method: 'PUT', data: data, url: route }).success(function (response, status, headers, config) {
+            AddXsfToken();
+            
+            $http.put(route, this.SerializeObject($form)).success(function (response, status, headers, config) {
                 $.rmiOSLoadingScreen();
                 successFunction(response, status);
             }).error(function (response) {
@@ -162,7 +160,7 @@ define(['appConfig'], function (app) {
         }
 
         this.AjaxGetWithData = function (data, route, successFunction, errorFunction) {
-            $.iOSLoadingScreen('Loading')
+            $.iOSLoadingScreen('Loading');
             $http({ method: 'GET', url: route, params: data }).success(function (response, status, headers, config) {
                 $.rmiOSLoadingScreen();
                 successFunction(response, status);

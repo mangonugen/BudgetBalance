@@ -12,7 +12,6 @@ define(['angularAMD', 'angular', 'ui-bootstrap', "jquery", 'jqueryAddon', 'jquer
    
         $routeProvider
         .when("/", angularAMD.route({
-                         
             templateUrl: function (rp) {
                 //return 'Views/Main/default.html';
                 return '/home/default';
@@ -93,7 +92,7 @@ define(['angularAMD', 'angular', 'ui-bootstrap', "jquery", 'jqueryAddon', 'jquer
     var indexController = function ($scope, $rootScope, $http, $location) {
              
         $scope.$on('$routeChangeStart', function (scope, next, current) {
-             
+            $.iOSLoadingScreen('Loading');
             if ($rootScope.IsloggedIn==true)
             {               
                 //$scope.authenicateUser($location.path(),$scope.authenicateUserComplete, $scope.authenicateUserError);
@@ -107,18 +106,23 @@ define(['angularAMD', 'angular', 'ui-bootstrap', "jquery", 'jqueryAddon', 'jquer
                 //    set95PercentWidth();
                 //}              
             }, 1000);
-         
-
         });
 
-        $scope.initializeController = function () {
+        $scope.$on('$viewContentLoaded', function () {
+            setTimeout(function () {
+                if ($('.ui-ios-overlay').hasClass('ios-overlay-show'))
+                    $.rmiOSLoadingScreen();
+            }, 10);
+        });
+
+        $scope.initializeController = function() {
             $rootScope.displayContent = false;
             if ($location.path() != "") {
                 //$scope.initializeApplication($scope.initializeApplicationComplete, $scope.initializeApplicationError);
             }
 
             console.log('init');
-        }
+        };
 
         $scope.initializeApplication = function (successFunction, errorFunction) {
             //blockUI.start();
@@ -161,7 +165,8 @@ define(['angularAMD', 'angular', 'ui-bootstrap', "jquery", 'jqueryAddon', 'jquer
 
         $("input[type=button]").each(validateForm);
 
-        $('.dropdown-submenu > a').submenupicker();
+        //$('.dropdown-submenu > a').submenupicker();
+        $('[data-submenu]').submenupicker();
     });
 
     function iOSLoading() {

@@ -46,6 +46,7 @@ namespace TransactionBalance.ApiControllers
             }
             
             SetCookie(user);
+            transaction.IsAuthenicated = true;
             return Ok(transaction);
         }
 
@@ -69,30 +70,53 @@ namespace TransactionBalance.ApiControllers
             }
 
             SetCookie(user);
+            transaction.IsAuthenicated = true;
             return Ok(transaction);
         }
 
+        [Route("Logout")]
+        [HttpGet]
+        public HttpResponseMessage Logout()
+        {
+            var transaction = new TransactionInformationDTO();
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, " ") { Expires = DateTime.Now.AddDays(-1) };
+            HttpContext.Current.Response.Cookies.Add(cookie);
+            transaction.IsAuthenicated = false;
+            var response = Request.CreateResponse(HttpStatusCode.OK, transaction);
+            return response;
+        }
+
+        /// <summary>
+        /// Is User Authenicated
+        /// </summary>
+        /// <returns>The <see cref="TransactionInformationDTO"/></returns>
+        [Route("IsUserAuthenicated")]
+        [HttpGet]
+        public IHttpActionResult IsUserAuthenicated()
+        {
+            var transaction = new TransactionInformationDTO();
+            if (User.Identity.IsAuthenticated)
+            {
+                transaction.IsAuthenicated = true;
+            }
+
+            return Ok(transaction);
+        }
 
         private void SetCookie(User user)
         {
-            var ticket = new FormsAuthenticationTicket
-            (
+            var ticket = new FormsAuthenticationTicket(
                 1,
                 user.UserId.ToString(),
                 DateTime.Now,
                 DateTime.Now.AddMinutes(FormsAuthentication.Timeout.TotalMinutes),
                 false,
                 string.Empty, //Roles.GetRolesForUser(user.UserName).ToString(), //set user role in cookies
-                FormsAuthentication.FormsCookiePath
-            );
-            HttpContext.Current.Response.Cookies.Add
-            (
-                new HttpCookie
-                (
+                FormsAuthentication.FormsCookiePath);
+            HttpContext.Current.Response.Cookies.Add(
+                new HttpCookie(
                     FormsAuthentication.FormsCookieName,
-                    FormsAuthentication.Encrypt(ticket)
-                )
-            );
+                    FormsAuthentication.Encrypt(ticket)));
         }
     }
 }

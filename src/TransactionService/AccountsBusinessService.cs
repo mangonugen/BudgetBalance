@@ -86,7 +86,7 @@ namespace TransactionService
                 else
                 {
                     transaction.ReturnStatus = false;
-                    transaction.ReturnMessage.Add("Login invalid.");
+                    transaction.ReturnMessage.Add("Invalid login or password.");
                 }
             }
             catch (Exception ex)
