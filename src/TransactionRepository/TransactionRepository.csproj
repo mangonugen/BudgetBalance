@@ -66,10 +66,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountsDataService.cs" />
+    <Compile Include="Interfaces\IAccountsDataService.cs" />
+    <Compile Include="UsersDataService.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="EntityFrameworkDataService.cs" />
-    <Compile Include="Interfaces\IAccountsDataService.cs" />
+    <Compile Include="Interfaces\IUsersDataService.cs" />
     <Compile Include="Interfaces\IDataService.cs" />
     <Compile Include="TransactionDatabase.cs" />
     <Compile Include="DynamicLibrary.cs" />

@@ -171,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllers\AccountApiController.cs" />
+    <Compile Include="ApiControllers\UserApiController.cs" />
     <Compile Include="ApiControllers\MainApiController.cs" />
     <Compile Include="ApiControllers\TestController.cs" />
     <Compile Include="ApiModels\UserDTO.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Extension\HtmlExtension.cs" />
     <Compile Include="Filters\ValidateAntiForgeryTokenFilter.cs" />
@@ -257,9 +259,11 @@
     <Content Include="Scripts\bootstrap-submenu.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\controllers\account\loginController.js" />
+    <Content Include="Scripts\controllers\account\indexController.js" />
+    <Content Include="Scripts\controllers\user\logoutController.js" />
+    <Content Include="Scripts\controllers\user\loginController.js" />
     <Content Include="Scripts\controllers\home\aboutController.js" />
-    <Content Include="Scripts\controllers\account\registerController.js" />
+    <Content Include="Scripts\controllers\user\registerController.js" />
     <Content Include="Scripts\controllers\home\defaultController.js" />
     <Content Include="Scripts\dataTables.bootstrap.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
@@ -276,19 +280,21 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\loginScript.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\r.js" />
     <Content Include="Scripts\require.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\services\usersService.js" />
     <Content Include="Scripts\services\accountsService.js" />
     <Content Include="Scripts\services\ajaxService.js" />
     <Content Include="Scripts\services\mainService.js" />
     <Content Include="Scripts\spin.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="TestRoute.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -302,18 +308,18 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\User\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\User\ConfirmEmail.cshtml" />
+    <Content Include="Views\User\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\User\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\User\ForgotPassword.cshtml" />
+    <Content Include="Views\User\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\User\Register.cshtml" />
+    <Content Include="Views\User\ResetPassword.cshtml" />
+    <Content Include="Views\User\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\User\SendCode.cshtml" />
+    <Content Include="Views\User\VerifyCode.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
@@ -326,12 +332,13 @@
     <Content Include="Views\Shared\_Layout1.cshtml" />
     <Content Include="Views\Shared\_LoadRequire.cshtml" />
     <Content Include="Views\Home\Default.cshtml" />
-    <Content Include="Views\Account\Login1.cshtml" />
+    <Content Include="Views\User\Logout.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\_Demographic.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Scripts\controllers\main\" />
-    <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

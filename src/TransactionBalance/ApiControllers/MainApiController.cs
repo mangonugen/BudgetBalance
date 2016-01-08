@@ -30,7 +30,7 @@ namespace TransactionBalance.ApiControllers
         public HttpResponseMessage AuthenicateUser([FromUri] string route)
         {
             var transaction = new TransactionInformationDTO();
-            transaction.IsAuthenicated = User.Identity.IsAuthenticated;
+            transaction.IsAuthenticated = User.Identity.IsAuthenticated;
             var response = Request.CreateResponse(HttpStatusCode.OK, transaction);
             return response;
 
@@ -80,7 +80,7 @@ namespace TransactionBalance.ApiControllers
             var transaction = new TransactionInformationDTO();
             if(User.Identity.IsAuthenticated)
             {
-                transaction.IsAuthenicated = true;
+                transaction.IsAuthenticated = true;
             }
 
             return Ok(transaction);
@@ -99,7 +99,7 @@ namespace TransactionBalance.ApiControllers
             var transaction = new TransactionInformationDTO();
             if(User.Identity.IsAuthenticated)
             {
-                transaction.IsAuthenicated = true;
+                transaction.IsAuthenticated = true;
             }
 
             transaction.ReturnMessage.Add(Utilities.ViewRenderer<HomeController>("_MenuPartial", null));

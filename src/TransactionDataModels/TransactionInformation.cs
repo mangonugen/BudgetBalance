@@ -12,7 +12,7 @@ namespace TransactionDataModels
         public int TotalPages;
         public int TotalRows;
         public int PageSize;
-        public bool IsAuthenicated;
+        public bool IsAuthenticated;
 
         public TransactionInformation()
         {
@@ -22,7 +22,7 @@ namespace TransactionDataModels
             TotalPages = 0;
             TotalPages = 0;
             PageSize = 0;
-            IsAuthenicated = false;
+            this.IsAuthenticated = false;
         }
 
         public void AddExceptionMessage(Exception exception)

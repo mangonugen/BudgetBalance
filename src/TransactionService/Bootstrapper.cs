@@ -18,6 +18,8 @@ namespace TransactionService
             var bootstrapper = _container.Resolve<TransactionRepository.Bootstrapper>();
             bootstrapper.Initialize();
 
+            _container.RegisterType<IUsersBusinessService, UsersBusinessService>();
+            _container.RegisterType<IUsersBusinessRules, UsersBusinessRules>();
             _container.RegisterType<IAccountsBusinessService, AccountsBusinessService>();
             _container.RegisterType<IAccountsBusinessRules, AccountsBusinessRules>();
         }

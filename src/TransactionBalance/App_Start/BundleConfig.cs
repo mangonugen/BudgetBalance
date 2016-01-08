@@ -66,6 +66,9 @@ namespace TransactionBalance
             bundles.Add(new ScriptBundle("~/bundles/accountsService").Include(
                         "~/Scripts/services/accountsService.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/usersService").Include(
+                        "~/Scripts/services/usersService.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/mainService").Include(
                         "~/Scripts/services/mainService.js"));
 

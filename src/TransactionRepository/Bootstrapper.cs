@@ -15,6 +15,7 @@ namespace TransactionRepository
 
         public void Initialize()
         {
+            _container.RegisterType<IUsersDataService, UsersDataService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IAccountsDataService, AccountsDataService>(new ContainerControlledLifetimeManager());
         }
     }

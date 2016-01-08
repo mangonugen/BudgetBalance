@@ -56,14 +56,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountsBusinessService.cs" />
     <Compile Include="AccountsBusinessRules.cs" />
-    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="AccountsBusinessService.cs" />
     <Compile Include="Interfaces\IAccountsBusinessRules.cs" />
+    <Compile Include="Interfaces\IAccountsBusinessService.cs" />
+    <Compile Include="UsersBusinessService.cs" />
+    <Compile Include="UsersBusinessRules.cs" />
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Interfaces\IUsersBusinessRules.cs" />
     <Compile Include="Interfaces\IValidationRules.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="ValidationRules.cs" />
-    <Compile Include="Interfaces\IAccountsBusinessService.cs" />
+    <Compile Include="Interfaces\IUsersBusinessService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validations.cs" />
   </ItemGroup>

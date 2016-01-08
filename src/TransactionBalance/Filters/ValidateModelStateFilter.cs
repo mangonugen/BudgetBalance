@@ -23,7 +23,7 @@ namespace TransactionBalance.Filters
                 transactionInformation.ReturnMessage = ModelStateHelper.ReturnErrorMessages(actionContext.ModelState.Values);
                 transactionInformation.ValidationErrors = ModelStateHelper.ReturnValidationErrors(actionContext.ModelState);
                 transactionInformation.ReturnStatus = false;
-                transactionInformation.IsAuthenicated = ctx.User.Identity.IsAuthenticated;
+                transactionInformation.IsAuthenticated = ctx.User.Identity.IsAuthenticated;
                 actionContext.Response = request.CreateResponse(HttpStatusCode.BadRequest, transactionInformation);
             }
         }

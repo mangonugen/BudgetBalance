@@ -1,0 +1,23 @@
+﻿@using Avanzare.MvcExtensions
+@model AvzrPosCommon.Models.DemographicModel
+
+<div class="form-group dar">
+    @Html.LabelFor(m => m.Address1)
+    @Html.TextBoxFor(m => m.Address1)            
+</div>
+<div class="form-group dar">
+    @Html.LabelFor(m => m.Address2)
+    @Html.TextBoxFor(m => m.Address2)
+</div>
+<div class="form-group dar">
+    @Html.LabelFor(m => m.City)
+    @Html.TextBoxFor(m => m.City)
+</div>
+<div class="form-group dar">
+    @Html.LabelFor(m => m.State)
+    @Html.StateDropdownListFor(m => m.State)
+</div>
+<div class="form-group dar" style="margin-bottom: 25px;">
+    @Html.LabelFor(m => m.ZipCode)
+    @Html.TextBoxFor(m => m.ZipCode, new { @class = "zip Numeric"})
+</div>

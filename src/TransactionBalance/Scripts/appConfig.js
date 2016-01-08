@@ -78,24 +78,28 @@ define(['angularAMD', 'angular', 'ui-bootstrap', "jquery", 'jqueryAddon', 'jquer
             }
         }))
 
-        // route for the promotion page
-        .when('/account/register', {
-            templateUrl: 'account/register',
-            controller: 'promotionCtrler'
-        })
-            
         .otherwise({ 
             redirectTo: '/' 
         });
     }]);
 
-    var indexController = function ($scope, $rootScope, $http, $location) {
+    var indexController = function ($scope, $rootScope, $http, $location, $browser) {
+
+        $scope.$on('$locationChangeStart', function (event) {
+            console.log($location.path());
+            //if ($scope.form.$invalid) {
+            //    event.preventDefault();
+            //}
+        });
              
         $scope.$on('$routeChangeStart', function (scope, next, current) {
             $.iOSLoadingScreen('Loading');
-            if ($rootScope.IsloggedIn==true)
+            console.log('$routeChangeStart');
+            if ($rootScope.IsloggedIn === true)
             {               
-                //$scope.authenicateUser($location.path(),$scope.authenicateUserComplete, $scope.authenicateUserError);
+                $scope.authenicateUser($location.path(),$scope.authenicateUserComplete, function() {
+                    console.log('Authenicate error');
+                });
             }         
         });
 
@@ -110,29 +114,100 @@ define(['angularAMD', 'angular', 'ui-bootstrap', "jquery", 'jqueryAddon', 'jquer
 
         $scope.$on('$viewContentLoaded', function () {
             setTimeout(function () {
+                //remove loading screen
                 if ($('.ui-ios-overlay').hasClass('ios-overlay-show'))
                     $.rmiOSLoadingScreen();
+                //collapse menu if open
+                if ($(".navbar-collapse").hasClass("collapse in"))
+                    $('.navbar-toggle').click();
+
+                $("input[type=button]").each($scope.setUnobtrusive);
             }, 10);
         });
+
+        $scope.setUnobtrusive = function () {
+            $.validator.unobtrusive.parse($(this).closest('form'));
+        }
 
         $scope.initializeController = function() {
             $rootScope.displayContent = false;
             if ($location.path() != "") {
-                //$scope.initializeApplication($scope.initializeApplicationComplete, $scope.initializeApplicationError);
+                $scope.initializeApplication($scope.initializeApplicationComplete, $scope.initializeApplicationError);
             }
-
-            console.log('init');
         };
 
         $scope.initializeApplication = function (successFunction, errorFunction) {
-            //blockUI.start();
-            //$scope.AjaxGet("/api/main/InitializeApplication", successFunction, errorFunction);
-            //blockUI.stop();
-            console.log('initApp')            
+            $scope.AjaxGet("/api/user/IsUserAuthenicated", successFunction, errorFunction);
         };
+
+        $scope.initializeApplicationComplete = function(response) {
+            $rootScope.IsloggedIn = response.IsAuthenticated;
+            if (!$rootScope.IsloggedIn) {
+                $location.path('/User/Login');
+            }
+        };
+
+        $scope.authenicateUser = function (route, successFunction, errorFunction) {
+            //var authenication = new Object();
+            //authenication.route = route;
+            //$scope.AjaxGet(authenication, "/api/user/IsUserAuthenicated", successFunction, errorFunction);
+            $scope.AjaxGet("/api/user/IsUserAuthenicated", successFunction, errorFunction);
+        };
+
+        $scope.authenicateUserComplete = function (response) {
+            if (response.IsAuthenticated == false)
+                $location.path('/');
+        }
+
+
+
+        $browser.onUrlChange(function (newUrl, newState) {
+            $rootScope.$evalAsync(function () {
+                var oldUrl = $location.absUrl();
+                var oldState = $location.$$state;
+
+                $location.$$parse(newUrl);
+                $location.$$state = newState;
+                if ($rootScope.$broadcast('$locationChangeStart', newUrl, oldUrl,
+                    newState, oldState).defaultPrevented) {
+                    $location.$$parse(oldUrl);
+                    $location.$$state = oldState;
+                    //setBrowserUrlWithFallback(oldUrl, false, oldState);
+                } else {
+                    //initializing = false;
+                    //afterLocationChange(oldUrl, oldState);
+                }
+            });
+            if (!$rootScope.$$phase) $rootScope.$digest();
+        });
+
+        $scope.AjaxGet = function (route, successFunction, errorFunction) {
+            $.iOSLoadingScreen('Loading');
+            console.log('$scope.AjaxGet');
+            $http({ method: 'GET', url: route }).success(function (response, status, headers, config) {
+                $.rmiOSLoadingScreen();
+                successFunction(response, status);
+            }).error(function (response) {
+                $.rmiOSLoadingScreen();
+                errorFunction(response);
+            });
+
+        }
+
+        //$scope.AjaxGetWithData = function (data, route, successFunction, errorFunction) {
+        //    $.iOSLoadingScreen('Loading');
+        //    $http({ method: 'GET', url: route, params: data }).success(function (response, status, headers, config) {
+        //        $.rmiOSLoadingScreen();
+        //        successFunction(response, status);
+        //    }).error(function (response) {
+        //        $.rmiOSLoadingScreen();
+        //        errorFunction(response);
+        //    });
+
+        //}
     };
 
-    indexController.$inject = ['$scope', '$rootScope', '$http', '$location'];
+    indexController.$inject = ['$scope', '$rootScope', '$http', '$location', '$browser'];
     app.controller("indexController", indexController);
   
     // Bootstrap Angular when DOM is ready

@@ -100,6 +100,22 @@ define(['appConfig'], function (app) {
             return o;
         };
 
+        this.DisplayError = function (response) {
+            var $danger = $('.text-danger');
+            if ($danger.hasClass('validation-summary-valid')) {
+                $danger.removeClass('validation-summary-valid').addClass('validation-summary-errors');
+            }
+            var $errorUl = $(".validation-summary-errors ul");
+            $errorUl.empty();
+            for (var propertyName in response.ValidationErrors) {
+                $errorUl.append("<li>" + response.ValidationErrors[propertyName] + "</li>");
+            }
+
+            $.each(response.ReturnMessage, function (index, value) {
+                $errorUl.append("<li>" + value + "</li>");
+            });
+        };
+
         this.AddXsfToken = function () {
             var token = $('input[name="__RequestVerificationToken"]').attr('value');
             if (token !== undefined)
@@ -123,13 +139,17 @@ define(['appConfig'], function (app) {
         this.AjaxPostWithNoAuthenication = function ($form, route, successFunction, errorFunction) {
             $.iOSLoadingScreen('Loading');
             this.AddXsfToken();
+            var self = this;
 
             $http.post(route, this.SerializeObject($form)).success(function (response, status, headers, config) {
                 $.rmiOSLoadingScreen();
                 successFunction(response, status);
             }).error(function (response) {
                 $.rmiOSLoadingScreen();
-                errorFunction(response);
+                if (typeof errorFunction === 'function')
+                    errorFunction(response);
+                if (typeof errorFunction === 'undefined')
+                    self.DisplayError(response);
             });
         }
 
@@ -169,7 +189,6 @@ define(['appConfig'], function (app) {
                 if (response.IsAuthenicated == false) { window.location = "/#/"; }
                 errorFunction(response);
             });
-
         }
 
         this.AjaxGetWithNoBlock = function (data, route, successFunction, errorFunction) {
